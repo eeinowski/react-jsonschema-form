@@ -195,7 +195,7 @@ export function isObject(thing) {
   return typeof thing === "object" && thing !== null && !Array.isArray(thing);
 }
 
-export function mergeObjects(obj1, obj2, concatArrays = false) {
+export function mergeObjects(obj1 = {}, obj2 = {}, concatArrays = false) {
   // Recursively merge deeply nested objects.
   var acc = Object.assign({}, obj1); // Prevent mutation of source object.
   return Object.keys(obj2).reduce(
