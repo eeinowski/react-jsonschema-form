@@ -158,13 +158,13 @@ export default class Form extends Component {
       enctype,
       acceptcharset,
       noHtml5Validate,
+      subForm,
     } = this.props;
 
     const { schema, uiSchema, formData, errorSchema, idSchema } = this.state;
     const registry = this.getRegistry();
     const _SchemaField = registry.fields.SchemaField;
-
-    return (
+    const Form = (
       <form
         className={className ? className : "rjsf"}
         id={id}
@@ -196,6 +196,36 @@ export default class Form extends Component {
             </p>}
       </form>
     );
+
+    const SubForm = (
+      <div
+        className={className ? className : "rjsf"}
+        id={id}
+        name={name}
+        method={method}
+        target={target}
+        action={action}
+        autoComplete={autocomplete}
+        encType={enctype}
+        acceptCharset={acceptcharset}
+        noValidate={noHtml5Validate}
+        onSubmit={this.onSubmit}>
+        {this.renderErrors()}
+        <_SchemaField
+          schema={schema}
+          uiSchema={uiSchema}
+          errorSchema={errorSchema}
+          idSchema={idSchema}
+          formData={formData}
+          onChange={this.onChange}
+          onBlur={this.onBlur}
+          registry={registry}
+          safeRenderCompletion={safeRenderCompletion}
+        />
+      </div>
+    );
+
+    return subForm ? SubForm : Form;
   }
 }
 
@@ -231,5 +261,6 @@ if (process.env.NODE_ENV !== "production") {
     transformErrors: PropTypes.func,
     safeRenderCompletion: PropTypes.bool,
     formContext: PropTypes.object,
+    subForm: PropTypes.bool,
   };
 }
